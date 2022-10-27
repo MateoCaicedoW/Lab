@@ -1,4 +1,4 @@
-package actions
+package users
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ import (
 )
 
 // Buffalo handler
-func UserNew(c buffalo.Context) error {
+func New(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
 	user := &models.User{}
@@ -28,7 +28,7 @@ func UserNew(c buffalo.Context) error {
 	return c.Render(200, r.HTML("users/new.plush.html"))
 }
 
-func UserCreate(c buffalo.Context) error {
+func Create(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 	user := models.User{}
 	if err := c.Bind(&user); err != nil {
@@ -58,7 +58,7 @@ func UserCreate(c buffalo.Context) error {
 	return c.Redirect(302, "/")
 }
 
-// func ListUser(c buffalo.Context) error {
+// func List(c buffalo.Context) error {
 // 	tx := c.Value("tx").(*pop.Connection)
 // 	user := []models.User{}
 
