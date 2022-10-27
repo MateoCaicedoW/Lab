@@ -16,7 +16,6 @@ func New() *buffalo.App {
 	if root != nil {
 		return root
 	}
-
 	root = buffalo.New(buffalo.Options{
 		Env:         envy.Get("GO_ENV", "development"),
 		SessionName: "_lab_session",

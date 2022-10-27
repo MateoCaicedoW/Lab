@@ -1,10 +1,15 @@
 package actions
 
 import (
+	"fmt"
+
 	"lab/app/models"
+
+	"lab/internal"
 
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop/v6"
+	"github.com/pkg/errors"
 )
 
 // Buffalo handler
@@ -29,8 +34,23 @@ func UserCreate(c buffalo.Context) error {
 	if err := c.Bind(&user); err != nil {
 		return err
 	}
+	f, err := c.File("someFile")
+	if err != nil {
+		return errors.WithStack(err)
+	}
 
-	err := tx.Create(&user)
+	blobFile, err := f.Open()
+	if err != nil {
+		return errors.WithStack(err)
+	}
+
+	// Upload the file to Google Cloud Storage
+	err = internal.Uploader.UploadFile(blobFile, f.Filename)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	fmt.Println(f.Filename, f.Size, f.Header)
+	err = tx.Create(&user)
 	if err != nil {
 		return err
 	}

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "bassetemp",
+  "private_key_id": "2bd77500053888b48a26cb8886836efcb7a924ad",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDMLOOOj/rNhYLA\nArspZ8Vdb2tUzjYT5DI+vnfR2PuhgZWWhER1BCxm0jTJlEGgE1CvF3Fg5uggR2wA\n+mjro/ojuOwZTKU3DQ5u2FjiFgGQRDBn8uuvdrJtQc+N0MeZ7jXzywwny2Y52cFJ\nyjqKl19ICrJ8roTtTQlXVcQn2g3mAGIrJwIYedkBrVA+nRqtKGjmJxmFi9/R5OI4\n1XS1KRLv3w4PAB+DiUA/+W2V8gRTYkGrVV7X0dXIKfIamr3Lcr2LHI7Ak6SiyB4U\n3exmvF9wPlUdA6tThpR0Ma+xZO7365UbwCHG0I15RrzGJTgiAXpAtwoYeAbTv3Kq\nTpPCJ6IrAgMBAAECggEAFLNOZPNTDchF/9qnCCUlvPnha2k20WB2+aaM9mEl7fN5\n65dAa46/Q7N3N6LI3oZmzUG2tIjkqvUizZyVy6JF555FjbEYJRM1TeawaEer4+kN\n8VQPMix6HZqpBOtQeVpN7Qg+lMBJ/n6F2snekpOTTPYMr5hwELEZS9n9t76jXxin\nSzxBRX03ix6FGf6l8nkenbnAo6JSf1pQea0ZIPmp2xnWHSAZDXrgt960aUfy8PLU\nyKamz+9EbhyUu7Hthtqaxth7au1UHHhGgH9Xzi8XiPAHpMeRDAbwyB+GMiz5bf9T\nBoUpoM1VUk+ATOqFdG9P7LHoAPgdh9NMy26uT/UIZQKBgQD7F4GqYBdtrtw1fywu\n8SQXBGR2CB2gbpaHM71PN6UBmDzbFhqkwH8nNdqj5hJi3y3eDPoYSi8S4qOzpTgC\n/34ZHoIwbozliTYzL6aF4+nQe8uUaQqIBZxOolRGB1MesqjcbRo3LA+yJ6KWyEp4\nQR8YbV3tNWN02SiOgg50uMq+VwKBgQDQKptTOOonCetQeYWwkeJB7+yoo0k3j1nX\n8pkWmKq8uXL0k9Q7Odzgn/WDbno8Q4h8rop0Zfy/uQE2YFLnxHT0gb61pdqhXSwD\nBdExZiRsFfcX+f1r1HSsTVXvhcUA86/VBo/fZOlsC1Cia9vt+qFLWBprgiiHHcC6\nZy/kN9VuTQKBgFyHmhIGHTwfPyk7tzWJSaptxPO2I+zWNASY7X9+2wDOcEawS5tB\nENqLPwo9I7Np2UZF8/f1holoGbl+/jgknPx2wLVGWAfSW7XbLnuStLxOkoQbfXUI\n1EQqD/JKirf6UL4COrHwO8yETKdSIhdUsDfZPc7HaOJLkGWLyfX7j0M7AoGBAM9c\nEdulz0HSFLDWTMEloO+z0tftx+prhsChbbPfofxa81MEyx2wNwEe9k7VRzguwZAJ\nwevPCCXnYXjMHOm4fhRuBg4mR5IEIOpl6gu+RrvQaZJduP6n5Q0aAGeXpjWbiWS3\no6uRdx/kaY9RyAPYbMGD4tWDE2H81lYYodFBeP7lAoGBAJbN5CxJTh0Ejo3Gx0SK\nfHMzuSUgTSuH/nrtrqTeCAVFUG7abYBMDq5OceOtFYg1LndbjXx1PDOV0GheNxA3\nECNZuI+SnQuSk8vMsfBTba1PSYlg8Cvqtznj1yPvo5AbEw3ChtoDSFTPwqAMFlr/\novzFbP3efxwwck7SwY/en07T\n-----END PRIVATE KEY-----\n",
+  "client_email": "basse-temp@bassetemp.iam.gserviceaccount.com",
+  "client_id": "106373506224667908513",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/basse-temp%40bassetemp.iam.gserviceaccount.com"
+}
