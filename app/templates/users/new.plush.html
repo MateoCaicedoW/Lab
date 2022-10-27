@@ -9,5 +9,40 @@
       <%= partial("users/form.plush.html") %>
     <% } %>
   </section>
+
+  <div class="content mt-3  rounded ">
+    <div class="py-2 content-cards  gap-4">
+        <%= if (len(users)==0) { %>
+            <div class="bg-white  text-muted py-4  card-task d-flex flex-column justify-content-center align-items-center">
+                <div class="pb-2 text-center">
+                    <h2 class="text-muted fs-5 m-0">
+                       There is not any users yet.
+                    </h2>
+                    <span class="fs-6"> Add some users to see.</span>
+                </div>
+            </div>
+        <% } %>
+        <%= for (i) in users { %>
+            
+            <div class="bg-white  text-muted py-4  card-task d-flex flex-column justify-content-between">
+                <h2 class="fs-3">
+                    <a class="text-info hover" href="#">
+                        <%= i.ID %>
+                    </a>
+                </h2>
+                
+                <div class="pb-2">
+                    <h2 class="text-muted fs-5 m-0">
+                      <%= i.FirstName %>
+                    </h2>
+
+                    <span class="fs-6">
+                        <%= i.LastName %>
+                    </span>
+                </div>
+              
+            </div>
+        <% } %>
+    </div>
   
 
