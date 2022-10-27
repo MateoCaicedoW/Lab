@@ -1,8 +1,8 @@
 package actions_test
 
 import (
-	"testing"
 	"lab/app"
+	"testing"
 
 	"github.com/gobuffalo/suite/v4"
 )

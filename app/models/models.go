@@ -2,6 +2,7 @@ package models
 
 import (
 	"lab/config"
+
 	"github.com/gobuffalo/envy"
 	"github.com/gobuffalo/pop/v6"
 	"github.com/wawandco/ox/pkg/buffalotools"

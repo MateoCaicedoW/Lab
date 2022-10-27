@@ -14,7 +14,7 @@ var (
 	// RequestID pulls the request id from the request and
 	// adds it if its not present.
 	RequestID = buffalotools.NewRequestIDMiddleware("RequestID")
-	
+
 	// Database middleware adds a `tx` context variable
 	// to every request, this tx variates to be a plain connection
 	// or a transaction based on the type of request.

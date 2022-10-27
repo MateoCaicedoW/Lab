@@ -3,6 +3,7 @@ package render
 import (
 	"lab/app/templates"
 	"lab/public"
+
 	"github.com/gobuffalo/buffalo/render"
 	"github.com/wawandco/ox/pkg/buffalotools"
 )
@@ -11,14 +12,14 @@ import (
 // the base for rendering HTML, JSON, XML and other formats
 // while also defining thing like the base layout.
 var Engine = render.New(render.Options{
-	HTMLLayout:   "application.plush.html",
-	TemplatesFS:  templates.FS(),
-	AssetsFS:     public.FS(),
-	Helpers:      Helpers,
+	HTMLLayout:  "application.plush.html",
+	TemplatesFS: templates.FS(),
+	AssetsFS:    public.FS(),
+	Helpers:     Helpers,
 })
 
-// Helpers available for the plush templates, there are 
-// some helpers that are injected by Buffalo but this is 
+// Helpers available for the plush templates, there are
+// some helpers that are injected by Buffalo but this is
 // the list of custom Helpers.
 var Helpers = map[string]interface{}{
 	// partialFeeder is the helper used by the render engine

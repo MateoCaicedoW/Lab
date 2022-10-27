@@ -3,9 +3,9 @@ package app
 import (
 	"net/http"
 
-	"lab/public"
-	"lab/app/actions/home"
+	"lab/app/actions"
 	"lab/app/middleware"
+	"lab/public"
 
 	"github.com/gobuffalo/buffalo"
 )
@@ -17,6 +17,6 @@ func setRoutes(root *buffalo.App) {
 	root.Use(middleware.ParameterLogger)
 	root.Use(middleware.CSRF)
 
-	root.GET("/", home.Index)
+	root.GET("/", actions.UsersNew)
 	root.ServeFiles("/", http.FS(public.FS()))
 }
