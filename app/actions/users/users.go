@@ -1,8 +1,6 @@
 package users
 
 import (
-	"fmt"
-
 	"lab/app/models"
 
 	"lab/internal"
@@ -43,30 +41,16 @@ func Create(c buffalo.Context) error {
 	if err != nil {
 		return errors.WithStack(err)
 	}
-
-	// Upload the file to Google Cloud Storage
-	err = internal.Uploader.UploadFile(blobFile, f.Filename)
-	if err != nil {
-		return errors.WithStack(err)
-	}
-	fmt.Println(f.Filename, f.Size, f.Header)
 	err = tx.Create(&user)
 	if err != nil {
 		return err
 	}
+	// Upload the file to Google Cloud Storage
+	err = internal.Uploader.UploadFile(blobFile, f.Filename, user.ID.String(), user.FirstName)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+
 	c.Set("user", user)
 	return c.Redirect(302, "/")
 }
-
-// func List(c buffalo.Context) error {
-// 	tx := c.Value("tx").(*pop.Connection)
-// 	user := []models.User{}
-
-// 	err := tx.All(&user)
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	c.Set("user", user)
-// 	return c.Redirect(302, "/")
-// }
