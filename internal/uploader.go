@@ -26,7 +26,7 @@ type ClientUploader struct {
 var Uploader *ClientUploader
 
 func init() {
-	os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", os.Getenv("GOOGLE_APPLICATION_CREDENTIALS")) // FILL IN WITH YOUR FILE PATH
+	os.Getenv("GOOGLE_APPLICATION_CREDENTIALS") // FILL IN WITH YOUR FILE PATH
 	client, err := storage.NewClient(context.Background())
 	if err != nil {
 		log.Fatalf("Failed to create client: %v", err)
