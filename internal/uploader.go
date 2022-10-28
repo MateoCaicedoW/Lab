@@ -6,15 +6,9 @@ import (
 	"io"
 	"log"
 	"mime/multipart"
-	"os"
 	"time"
 
 	"cloud.google.com/go/storage"
-)
-
-var (
-	ProjectID  = "bassetemp"
-	BucketName = "basse-lab"
 )
 
 type ClientUploader struct {
@@ -26,7 +20,7 @@ type ClientUploader struct {
 var Uploader *ClientUploader
 
 func init() {
-	os.Getenv("GOOGLE_APPLICATION_CREDENTIALS") // FILL IN WITH YOUR FILE PATH
+
 	client, err := storage.NewClient(context.Background())
 	if err != nil {
 		log.Fatalf("Failed to create client: %v", err)
@@ -70,6 +64,7 @@ func (c *ClientUploader) UploadFile(file multipart.File, object, ID string) erro
 			"belongs_to": ID,
 		},
 	}
+
 	if _, err := o.Update(ctx, objectAttrsToUpdate); err != nil {
 		return fmt.Errorf("ObjectHandle(%q).Update: %v", object, err)
 	}

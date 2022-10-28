@@ -1,6 +1,8 @@
 package app
 
 import (
+	"os"
+
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/envy"
 )
@@ -16,6 +18,8 @@ func New() *buffalo.App {
 	if root != nil {
 		return root
 	}
+
+	configure()
 	root = buffalo.New(buffalo.Options{
 		Env:         envy.Get("GO_ENV", "development"),
 		SessionName: "_lab_session",
@@ -25,4 +29,9 @@ func New() *buffalo.App {
 	setRoutes(root)
 
 	return root
+}
+
+func configure() {
+	os.Getenv("GOOGLE_APPLICATION_CREDENTIALS")
+
 }
