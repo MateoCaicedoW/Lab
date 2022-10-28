@@ -6,6 +6,7 @@ import (
 	"lab/app/models"
 	"time"
 
+	"cloud.google.com/go/storage"
 	"github.com/gobuffalo/pop/v6"
 	"github.com/gofrs/uuid"
 	"google.golang.org/api/iterator"
@@ -20,7 +21,14 @@ func (c *ClientUploader) ListFiles(bucket string, tx *pop.Connection, ID uuid.UU
 
 	files := models.Files{}
 
-	it := c.cl.Bucket(bucket).Objects(ctx, nil)
+	query := &storage.Query{Prefix: "?"}
+
+	if !ID.IsNil() {
+		query.Prefix = ID.String()
+	}
+
+	it := c.cl.Bucket(bucket).Objects(ctx, query)
+
 	for {
 		attrs, err := it.Next()
 		if err == iterator.Done {
@@ -30,19 +38,10 @@ func (c *ClientUploader) ListFiles(bucket string, tx *pop.Connection, ID uuid.UU
 			return nil, fmt.Errorf("Bucket(%q).Objects: %v", bucket, err)
 		}
 
-		if ID.IsNil() {
-			files = append(files, models.ListFile{
-				"Name": attrs.Name,
-				"ID":   attrs.Metadata["belongs_to"],
-			})
-		}
-
-		if attrs.Metadata["belongs_to"] == ID.String() {
-			files = append(files, models.ListFile{
-				"Name": attrs.Name,
-				"ID":   ID.String(),
-			})
-		}
+		files = append(files, models.ListFile{
+			"Name": attrs.Name,
+			"ID":   attrs.Metadata["belongs_to"],
+		})
 
 	}
 	return files, nil

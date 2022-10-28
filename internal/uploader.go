@@ -40,7 +40,7 @@ func (c *ClientUploader) UploadFile(file multipart.File, object, ID string) erro
 	ctx, cancel := context.WithTimeout(ctx, time.Second*50)
 	defer cancel()
 
-	obj := c.cl.Bucket(c.bucketName).Object(object)
+	obj := c.cl.Bucket(c.bucketName).Object(ID + "/" + object)
 
 	w := obj.NewWriter(ctx)
 
