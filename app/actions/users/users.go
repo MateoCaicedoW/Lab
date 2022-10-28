@@ -1,7 +1,6 @@
 package users
 
 import (
-	"fmt"
 	"lab/app/models"
 	"lab/internal"
 
@@ -27,13 +26,10 @@ func New(c buffalo.Context) error {
 		return err
 	}
 
-	fmt.Println(files)
-
 	c.Set("files", files)
 	c.Set("user", user)
 	c.Set("users", users)
 	c.Set("file", file)
-
 	return c.Render(200, r.HTML("users/new.plush.html"))
 }
 

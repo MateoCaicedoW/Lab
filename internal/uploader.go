@@ -20,7 +20,6 @@ type ClientUploader struct {
 var Uploader *ClientUploader
 
 func init() {
-
 	client, err := storage.NewClient(context.Background())
 	if err != nil {
 		log.Fatalf("Failed to create client: %v", err)
