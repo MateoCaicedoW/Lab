@@ -32,13 +32,15 @@ func (c *ClientUploader) ListFiles(bucket string, tx *pop.Connection, ID uuid.UU
 
 		if ID.IsNil() {
 			files = append(files, models.ListFile{
-				File: attrs.Metadata,
+				"Name": attrs.Name,
+				"ID":   attrs.Metadata["belongs_to"],
 			})
 		}
 
 		if attrs.Metadata["belongs_to"] == ID.String() {
 			files = append(files, models.ListFile{
-				File: attrs.Metadata,
+				"Name": attrs.Name,
+				"ID":   ID.String(),
 			})
 		}
 

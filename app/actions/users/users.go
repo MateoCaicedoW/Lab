@@ -1,6 +1,7 @@
 package users
 
 import (
+	"fmt"
 	"lab/app/models"
 	"lab/internal"
 
@@ -25,6 +26,8 @@ func New(c buffalo.Context) error {
 	if err != nil {
 		return err
 	}
+
+	fmt.Println(files)
 
 	c.Set("files", files)
 	c.Set("user", user)

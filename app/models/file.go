@@ -11,8 +11,6 @@ type File struct {
 	MyFile binding.File `db:"-"`
 }
 
-type ListFile struct {
-	File map[string]string `db:"-"`
-}
+type ListFile map[string]string
 
 type Files []ListFile

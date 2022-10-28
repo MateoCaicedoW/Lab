@@ -56,21 +56,20 @@
             </div>
             <% } %>
             <%= for (value) in files { %>
-                <%= for (key, value) in value.File { %>
                     <div class="bg-white  text-muted py-4  card-task d-flex flex-column justify-content-between">
                         <h2 class="fs-3">
                             <a class="text-info hover" href="#">
-                                <%= key %>
+                                <%= value["ID"] %>
                             </a>
                         </h2>
 
                         <div class="pb-2">
                             <h2 class="text-muted fs-5 m-0">
-                                <%= value %>
+                                <%= value["Name"] %>
                             </h2>
                         </div>
                     </div>
-                <% } %>
+            
             <% } %>
     </div>
 </div>
