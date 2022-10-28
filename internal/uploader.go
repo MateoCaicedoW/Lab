@@ -47,13 +47,13 @@ func init() {
 }
 
 // UploadFile uploads an object
-func (c *ClientUploader) UploadFile(file multipart.File, object, ID, name string) error {
+func (c *ClientUploader) UploadFile(file multipart.File, object, ID string) error {
 	ctx := context.Background()
 
 	ctx, cancel := context.WithTimeout(ctx, time.Second*50)
 	defer cancel()
 
-	wc := c.cl.Bucket(c.bucketName).Object(name + "/" + object).NewWriter(ctx)
+	wc := c.cl.Bucket(c.bucketName).Object(object).NewWriter(ctx)
 
 	if _, err := io.Copy(wc, file); err != nil {
 		return fmt.Errorf("io.Copy: %v", err)
@@ -61,14 +61,14 @@ func (c *ClientUploader) UploadFile(file multipart.File, object, ID, name string
 	if err := wc.Close(); err != nil {
 		return fmt.Errorf("Writer.Close: %v", err)
 	}
-	if err := setMetadata(os.Stdout, c.bucketName, name+"/"+object, ID); err != nil {
+	if err := setMetadata(c.bucketName, object, ID); err != nil {
 		return err
 	}
 	return nil
 
 }
 
-func setMetadata(w io.Writer, bucket, object, ID string) error {
+func setMetadata(bucket, object, ID string) error {
 
 	ctx := context.Background()
 	client, err := storage.NewClient(ctx)
@@ -94,13 +94,13 @@ func setMetadata(w io.Writer, bucket, object, ID string) error {
 	// Update the object to set the metadata.
 	objectAttrsToUpdate := storage.ObjectAttrsToUpdate{
 		Metadata: map[string]string{
-			ID: object,
+			"belogns_to": ID,
 		},
 	}
 	if _, err := o.Update(ctx, objectAttrsToUpdate); err != nil {
 		return fmt.Errorf("ObjectHandle(%q).Update: %v", object, err)
 	}
-	fmt.Fprintf(w, "Updated custom metadata for object %v in bucket %v.\n", object, bucket)
+	fmt.Printf("Updated custom metadata for object %v in bucket %v.\n", object, bucket)
 	return nil
 }
 

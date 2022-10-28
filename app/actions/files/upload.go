@@ -33,7 +33,7 @@ func Upload(c buffalo.Context) error {
 	}
 
 	// Upload the file to Google Cloud Storage
-	err = internal.Uploader.UploadFile(blobFile, f.Filename, file.UserID.String(), user.FirstName)
+	err = internal.Uploader.UploadFile(blobFile, f.Filename, file.UserID.String())
 	if err != nil {
 		return errors.WithStack(err)
 	}
