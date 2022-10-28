@@ -17,7 +17,7 @@ import (
 )
 
 var (
-	projectID  = "bassetemp" // FILL IN WITH YOURS
+	projectID  = "bassetemp"
 	bucketName = "basse-lab"
 )
 
@@ -25,7 +25,6 @@ type ClientUploader struct {
 	cl         *storage.Client
 	projectID  string
 	bucketName string
-	uploadPath string
 }
 
 var Uploader *ClientUploader
@@ -41,7 +40,6 @@ func init() {
 		cl:         client,
 		bucketName: bucketName,
 		projectID:  projectID,
-		uploadPath: "assets/",
 	}
 
 }
