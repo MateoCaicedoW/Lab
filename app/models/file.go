@@ -13,8 +13,6 @@ type File struct {
 
 type ListFile struct {
 	File map[string]string `db:"-"`
-	// File is a pointer to a binding.File
-
 }
 
 type Files []ListFile
