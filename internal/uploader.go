@@ -117,22 +117,8 @@ func ListFiles(bucket string, tx *pop.Connection, ID uuid.UUID) (models.Files, e
 	defer cancel()
 
 	files := models.Files{}
-	query := &storage.Query{}
-	if !ID.IsNil() {
-		user := &models.User{}
-		err := tx.Find(user, ID)
-		if err != nil {
-			return nil, err
-		}
 
-		if user.ID == ID {
-			query.Prefix = user.FirstName + "/"
-
-		}
-
-	}
-
-	it := client.Bucket(bucket).Objects(ctx, query)
+	it := client.Bucket(bucket).Objects(ctx, nil)
 	for {
 		attrs, err := it.Next()
 		if err == iterator.Done {
@@ -142,9 +128,17 @@ func ListFiles(bucket string, tx *pop.Connection, ID uuid.UUID) (models.Files, e
 			return nil, fmt.Errorf("Bucket(%q).Objects: %v", bucket, err)
 		}
 
-		files = append(files, models.ListFile{
-			File: attrs.Metadata,
-		})
+		if ID.IsNil() {
+			files = append(files, models.ListFile{
+				File: attrs.Metadata,
+			})
+		}
+
+		if attrs.Metadata["belogns_to"] == ID.String() {
+			files = append(files, models.ListFile{
+				File: attrs.Metadata,
+			})
+		}
 
 	}
 	return files, nil
