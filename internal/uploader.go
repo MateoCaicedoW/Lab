@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"cloud.google.com/go/storage"
+	"github.com/gobuffalo/pop/v6"
 	"github.com/gofrs/uuid"
 	"google.golang.org/api/iterator"
 )
@@ -103,8 +104,8 @@ func setMetadata(w io.Writer, bucket, object, ID string) error {
 	return nil
 }
 
-func ListFiles(bucket string, ID uuid.UUID) (models.Files, error) {
-	// bucket := "bucket-name"
+func ListFiles(bucket string, tx *pop.Connection, ID uuid.UUID) (models.Files, error) {
+
 	ctx := context.Background()
 	client, err := storage.NewClient(ctx)
 	if err != nil {
@@ -116,7 +117,22 @@ func ListFiles(bucket string, ID uuid.UUID) (models.Files, error) {
 	defer cancel()
 
 	files := models.Files{}
-	it := client.Bucket(bucket).Objects(ctx, nil)
+	query := &storage.Query{}
+	if !ID.IsNil() {
+		user := &models.User{}
+		err := tx.Find(user, ID)
+		if err != nil {
+			return nil, err
+		}
+
+		if user.ID == ID {
+			query.Prefix = user.FirstName + "/"
+
+		}
+
+	}
+
+	it := client.Bucket(bucket).Objects(ctx, query)
 	for {
 		attrs, err := it.Next()
 		if err == iterator.Done {
@@ -124,16 +140,6 @@ func ListFiles(bucket string, ID uuid.UUID) (models.Files, error) {
 		}
 		if err != nil {
 			return nil, fmt.Errorf("Bucket(%q).Objects: %v", bucket, err)
-		}
-		fmt.Println("IDUPLOAD", ID)
-
-		if !ID.IsNil() && ID.String() == attrs.KMSKeyName {
-			fmt.Println("assasas")
-			files = append(files, models.ListFile{
-				File: attrs.Metadata,
-			})
-
-			return files, nil
 		}
 
 		files = append(files, models.ListFile{

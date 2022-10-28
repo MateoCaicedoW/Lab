@@ -21,7 +21,7 @@ func New(c buffalo.Context) error {
 		return err
 	}
 
-	files, err := internal.ListFiles("basse-lab", uuid.FromStringOrNil(c.Param("UserID")))
+	files, err := internal.ListFiles("basse-lab", tx, uuid.FromStringOrNil(c.Param("UserID")))
 	if err != nil {
 		return err
 	}
