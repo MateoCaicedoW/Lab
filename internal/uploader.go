@@ -4,21 +4,17 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"lab/app/models"
 	"log"
 	"mime/multipart"
 	"os"
 	"time"
 
 	"cloud.google.com/go/storage"
-	"github.com/gobuffalo/pop/v6"
-	"github.com/gofrs/uuid"
-	"google.golang.org/api/iterator"
 )
 
 var (
-	projectID  = "bassetemp"
-	bucketName = "basse-lab"
+	ProjectID  = "bassetemp"
+	BucketName = "basse-lab"
 )
 
 type ClientUploader struct {
@@ -38,8 +34,8 @@ func init() {
 
 	Uploader = &ClientUploader{
 		cl:         client,
-		bucketName: bucketName,
-		projectID:  projectID,
+		bucketName: BucketName,
+		projectID:  ProjectID,
 	}
 
 }
@@ -71,7 +67,7 @@ func (c *ClientUploader) UploadFile(file multipart.File, object, ID string) erro
 	// Update the object to set the metadata.
 	objectAttrsToUpdate := storage.ObjectAttrsToUpdate{
 		Metadata: map[string]string{
-			"belogns_to": ID,
+			"belongs_to": ID,
 		},
 	}
 	if _, err := o.Update(ctx, objectAttrsToUpdate); err != nil {
@@ -80,44 +76,4 @@ func (c *ClientUploader) UploadFile(file multipart.File, object, ID string) erro
 
 	return nil
 
-}
-
-func ListFiles(bucket string, tx *pop.Connection, ID uuid.UUID) (models.Files, error) {
-
-	ctx := context.Background()
-	client, err := storage.NewClient(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("storage.NewClient: %v", err)
-	}
-	defer client.Close()
-
-	ctx, cancel := context.WithTimeout(ctx, time.Second*10)
-	defer cancel()
-
-	files := models.Files{}
-
-	it := client.Bucket(bucket).Objects(ctx, nil)
-	for {
-		attrs, err := it.Next()
-		if err == iterator.Done {
-			break
-		}
-		if err != nil {
-			return nil, fmt.Errorf("Bucket(%q).Objects: %v", bucket, err)
-		}
-
-		if ID.IsNil() {
-			files = append(files, models.ListFile{
-				File: attrs.Metadata,
-			})
-		}
-
-		if attrs.Metadata["belogns_to"] == ID.String() {
-			files = append(files, models.ListFile{
-				File: attrs.Metadata,
-			})
-		}
-
-	}
-	return files, nil
 }
