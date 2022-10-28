@@ -13,7 +13,6 @@ vendor/
 .vscode/
 .grifter/
 .DS_Store
-.env
 .secrets
 c.out
 coverage.txt
