@@ -21,6 +21,5 @@ func setRoutes(root *buffalo.App) {
 	root.GET("/", users.New)
 	root.POST("/users/new", users.Create)
 	root.POST("/upload", files.Upload)
-	// root.GET("/files", files.Filter)
 	root.ServeFiles("/", http.FS(public.FS()))
 }
