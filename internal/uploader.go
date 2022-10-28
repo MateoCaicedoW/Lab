@@ -4,12 +4,15 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"lab/app/models"
 	"log"
 	"mime/multipart"
 	"os"
 	"time"
 
 	"cloud.google.com/go/storage"
+	"github.com/gofrs/uuid"
+	"google.golang.org/api/iterator"
 )
 
 var (
@@ -98,4 +101,45 @@ func setMetadata(w io.Writer, bucket, object, ID string) error {
 	}
 	fmt.Fprintf(w, "Updated custom metadata for object %v in bucket %v.\n", object, bucket)
 	return nil
+}
+
+func ListFiles(bucket string, ID uuid.UUID) (models.Files, error) {
+	// bucket := "bucket-name"
+	ctx := context.Background()
+	client, err := storage.NewClient(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("storage.NewClient: %v", err)
+	}
+	defer client.Close()
+
+	ctx, cancel := context.WithTimeout(ctx, time.Second*10)
+	defer cancel()
+
+	files := models.Files{}
+	it := client.Bucket(bucket).Objects(ctx, nil)
+	for {
+		attrs, err := it.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			return nil, fmt.Errorf("Bucket(%q).Objects: %v", bucket, err)
+		}
+		fmt.Println("IDUPLOAD", ID)
+
+		if !ID.IsNil() && ID.String() == attrs.KMSKeyName {
+			fmt.Println("assasas")
+			files = append(files, models.ListFile{
+				File: attrs.Metadata,
+			})
+
+			return files, nil
+		}
+
+		files = append(files, models.ListFile{
+			File: attrs.Metadata,
+		})
+
+	}
+	return files, nil
 }

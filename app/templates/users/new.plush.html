@@ -13,6 +13,7 @@
 <div class="mt-11"></div>
 
 
+
 <section class="px-5 bg-white m-auto py-4  rounded-1 shadow-sm word-wrap ">
     <div class="py-4 mb-2">
         <h3 class="d-inline-block">Upload Archive</h3>
@@ -21,8 +22,7 @@
 
     <%= form_for(file, {action: "/upload" , method: "POST" }) { %>
         <%= f.FileTag("MyFile", {name: "someFile" }) %>
-        <%= f.SelectTag("UserID", {options: users}) %>
-
+        <%= f.SelectTag("UserID", {options: users, label: "UserName"}) %>
     
         
         <div class="d-flex justify-content-end buttons pt-4">
@@ -33,40 +33,42 @@
 
 </section>
 
-
+<%= form_for(file, {action: "/" , method: "GET" }) { %>
+    <%= f.SelectTag("UserID", {options: users, label: "Search"}) %>
+    <div class="d-flex justify-content-end buttons pt-4">
+        <button type="submit"
+            class="btn btn-primary px-4 py-2 mb-3 mb-sm-0 justify-content-end">Search</button>
+    </div>
+<% } %>
 <div class="content mt-3  rounded ">
     <div class="py-2 content-cards  gap-4">
-        <%= if (len(users)==0) { %>
+        <%= if (len(files)==0) { %>
             <div
                 class="bg-white  text-muted py-4  card-task d-flex flex-column justify-content-center align-items-center">
                 <div class="pb-2 text-center">
                     <h2 class="text-muted fs-5 m-0">
-                        There is not any users yet.
+                        There is not any files yet.
                     </h2>
-                    <span class="fs-6"> Add some users to see.</span>
+                    <span class="fs-6"> Add some files to see.</span>
                 </div>
             </div>
             <% } %>
-                <%= for (i) in users { %>
-
+            <%= for (value) in files { %>
+                <%= for (key, value) in value.File { %>
                     <div class="bg-white  text-muted py-4  card-task d-flex flex-column justify-content-between">
                         <h2 class="fs-3">
                             <a class="text-info hover" href="#">
-                                <%= i.ID %>
+                                <%= key %>
                             </a>
                         </h2>
 
                         <div class="pb-2">
                             <h2 class="text-muted fs-5 m-0">
-                                <%= i.FirstName %>
+                                <%= value %>
                             </h2>
-
-                            <span class="fs-6">
-                                <%= i.LastName %>
-                            </span>
                         </div>
-
                     </div>
-                    <% } %>
+                <% } %>
+            <% } %>
     </div>
 </div>

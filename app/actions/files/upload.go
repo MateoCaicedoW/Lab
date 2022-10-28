@@ -41,3 +41,12 @@ func Upload(c buffalo.Context) error {
 	c.Set("file", file)
 	return c.Redirect(302, "/")
 }
+
+// func Filter(c buffalo.Context) error {
+// 	files, err := internal.Filter("basse-lab", c.Param("UserID"))
+// 	if err != nil {
+// 		return err
+// 	}
+// 	c.Set("files", files)
+// 	return c.Redirect(302, "/")
+// }
