@@ -40,32 +40,17 @@ func (c *ClientUploader) UploadFile(file multipart.File, object, ID string) erro
 	ctx, cancel := context.WithTimeout(ctx, time.Second*50)
 	defer cancel()
 
-	obj := c.cl.Bucket(c.bucketName).Object(ID + "/" + object)
+	w := c.cl.Bucket(c.bucketName).Object(ID + "/" + object).NewWriter(ctx)
 
-	w := obj.NewWriter(ctx)
+	w.Metadata = map[string]string{
+		"belongs_to": ID,
+	}
 
 	if _, err := io.Copy(w, file); err != nil {
 		return fmt.Errorf("io.Copy: %v", err)
 	}
 	if err := w.Close(); err != nil {
 		return fmt.Errorf("Writer.Close: %v", err)
-	}
-
-	attrs, err := obj.Attrs(ctx)
-	if err != nil {
-		return fmt.Errorf("object.Attrs: %v", err)
-	}
-	o := obj.If(storage.Conditions{MetagenerationMatch: attrs.Metageneration})
-
-	// Update the object to set the metadata.
-	objectAttrsToUpdate := storage.ObjectAttrsToUpdate{
-		Metadata: map[string]string{
-			"belongs_to": ID,
-		},
-	}
-
-	if _, err := o.Update(ctx, objectAttrsToUpdate); err != nil {
-		return fmt.Errorf("ObjectHandle(%q).Update: %v", object, err)
 	}
 
 	return nil
