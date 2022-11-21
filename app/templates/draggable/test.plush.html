@@ -1,0 +1,156 @@
+<html>
+<body>
+<button id="pinnedpositionsbutton" style="width: 80px; height: 50px; font-size: 17" onclick="setPinnedPositionItemToLocalStorage()">Pinned Position</button>
+<div id="draggable-div">DRAG THIS</div>
+
+<style>
+    #draggable-div{
+  cursor: move;
+  font-size: 30px;
+  text-align: center;
+ line-height: 200px;
+  height: 200px;
+  width: 200px;
+  background: linear-gradient(to bottom, white, lightblue);    
+  border-color: black;
+  border-style: dotted;
+  border-width: 3px;
+  border-radius: 15%;
+  position: absolute;
+    }
+</style>
+
+<script>
+
+    //Makes the DIV element draggagle:
+
+dragElement(document.getElementById("draggable-div"));
+var draggable = document.getElementById("draggable-div");
+
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    /* if present, the header is where you move the DIV from:*/
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    /* otherwise, move the DIV from anywhere inside the DIV:*/
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+
+  
+function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+    
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    /* stop moving when mouse button is released:*/
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+  
+}  
+
+    //DELETES THE PREVIOUS FIXED POSITION ENTRY FROM LOCAL STORAGE AND STORES THE NEW ONE AFTER IT WAS DRAGGED SOMEWHERE ELSE
+function setPinnedPositionItemToLocalStorage(){
+    localStorage.removeItem("draggable-left");
+    localStorage.removeItem("draggable-top");
+    localStorage.setItem("draggable-left", draggable.style.left);
+    localStorage.setItem("draggable-top", draggable.style.top);
+    
+}
+    
+
+  // RETRIEVES THE DIV'S POSITION FROM LOCAL STORAGE  
+    
+    (function RetrieveValueFromLocalStorage() {
+    
+    draggable.style.top = localStorage.getItem("draggable-top");
+    draggable.style.left = localStorage.getItem("draggable-left");
+
+//immediate function is called on page loading and sets input value from localstorage
+})();
+
+</script>
+
+
+<p class="text">Contrary to popular belief, Lorem Ipsum is not simply random text. 
+    It has roots in a piece of classical Latin literature from 45 BC, 
+    making it over 2000 years old. Richard McClintock, a Latin professor 
+    at Hampden-Sydney College in Virginia, looked up one of the more obscure 
+    Latin words, consectetur, from a Lorem Ipsum passage, and going through 
+    the cites of the word in classical literature, discovered the undoubtable 
+    source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus 
+    Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 
+    BC. This book is a treatise on the theory of ethics, very popular during 
+    the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit 
+    amet..", comes from a line in section 1.10.32.
+    Contrary to popular belief, Lorem Ipsum is not simply random text. 
+    It has roots in a piece of classical Latin literature from 45 BC, 
+    making it over 2000 years old. Richard McClintock, a Latin professor 
+    at Hampden-Sydney College in Virginia, looked up one of the more obscure 
+    Latin words, consectetur, from a Lorem Ipsum passage, and going through 
+    the cites of the word in classical literature, discovered the undoubtable 
+    source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus 
+    Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 
+    BC. This book is a treatise on the theory of ethics, very popular during 
+    the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit 
+    amet..", comes from a line in section 1.10.32.
+    Contrary to popular belief, Lorem Ipsum is not simply random text. 
+    It has roots in a piece of classical Latin literature from 45 BC, 
+    making it over 2000 years old. Richard McClintock, a Latin professor 
+    at Hampden-Sydney College in Virginia, looked up one of the more obscure 
+    Latin words, consectetur, from a Lorem Ipsum passage, and going through 
+    the cites of the word in classical literature, discovered the undoubtable 
+    source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus 
+    Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 
+    BC. This book is a treatise on the theory of ethics, very popular during 
+    the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit 
+    amet..", comes from a line in section 1.10.32.
+    Contrary to popular belief, Lorem Ipsum is not simply random text. 
+    It has roots in a piece of classical Latin literature from 45 BC, 
+    making it over 2000 years old. Richard McClintock, a Latin professor 
+    at Hampden-Sydney College in Virginia, looked up one of the more obscure 
+    Latin words, consectetur, from a Lorem Ipsum passage, and going through 
+    the cites of the word in classical literature, discovered the undoubtable 
+    source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus 
+    Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 
+    BC. This book is a treatise on the theory of ethics, very popular during 
+    the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit 
+    amet..", comes from a line in section 1.10.32.
+    Contrary to popular belief, Lorem Ipsum is not simply random text. 
+    It has roots in a piece of classical Latin literature from 45 BC, 
+    making it over 2000 years old. Richard McClintock, a Latin professor 
+    at Hampden-Sydney College in Virginia, looked up one of the more obscure 
+    Latin words, consectetur, from a Lorem Ipsum passage, and going through 
+    the cites of the word in classical literature, discovered the undoubtable 
+    source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus 
+    Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 
+    BC. This book is a treatise on the theory of ethics, very popular during 
+    the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit 
+    amet..", comes from a line in section 1.10.32.
+</p>
+</body>
+</html>
